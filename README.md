@@ -1,8 +1,6 @@
 # Face-Reco
 **I know who you are!**
->-------
->------------------------------
->------------------------------------
+-------
 
 > OVERVIEW
 
@@ -30,7 +28,7 @@ Face-Reco is a real-time face recognition application developed to detect and id
 ![alt text](https://i.ibb.co/yB2tdZf/Screenshot-1359.png)
 
 
->    -------
+
 
 
 > REFERENCES
