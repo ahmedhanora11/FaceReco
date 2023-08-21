@@ -5,6 +5,9 @@ import cv2
 import numpy as np
 import math
 import dlib
+from gtts import gTTS
+import time
+
 
 def face_confidence(face_distance, face_match_threshold=0.6):
     range_val = (1.0 - face_match_threshold)
@@ -22,6 +25,9 @@ class FaceRecognition:
         self.known_face_names = []
         self.process_current_frame = True
         self.encode_faces()
+        self.name_announced = False  # Initialize the flag to False
+        self.last_announcement_time = 0  # Initialize the last announcement time to 0
+
 
     def encode_faces(self):
         for image in os.listdir('faces'):
@@ -38,6 +44,8 @@ class FaceRecognition:
 
         if not video_capture.isOpened():
             sys.exit('No camera is found!')
+
+
 
         while True:
             ret, frame = video_capture.read()
@@ -67,6 +75,14 @@ class FaceRecognition:
                     if matches[best_match_index]:
                         name = self.known_face_names[best_match_index]
                         confidence = face_confidence(face_distances[best_match_index])
+
+                        current_time = time.time()
+                        if not self.name_announced or current_time - self.last_announcement_time >= 15:
+                            tts = gTTS(text=f"Detected face: {name.split('.')[0]}", lang='en')
+                            tts.save('temp.mp3')
+                            os.system('start temp.mp3')
+                            self.name_announced = True
+                            self.last_announcement_time = current_time
 
                     face_names.append(f'{name} ({confidence})')
 
@@ -104,6 +120,8 @@ class FaceRecognition:
 
                 if cv2.waitKey(1) == ord('q'):
                     break
+
+        
 
         video_capture.release()
         cv2.destroyAllWindows()
