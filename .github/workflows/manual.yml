@@ -28,5 +28,4 @@ jobs:
         pip install gTTS
         # Add any additional dependencies here
 
-    - name: Run Face Recognition
-      run: python ${{ github.workspace }}/main.py
+  
