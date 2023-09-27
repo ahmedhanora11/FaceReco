@@ -1,0 +1,32 @@
+name: Face Recognition
+
+on:
+  push:
+    branches:
+      - main  # Change this to the main branch name of your repository
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # Specify the Python version you want to use
+
+    - name: Install Dependencies
+      run: |
+        pip install face_recognition
+        pip install opencv-python-headless
+        pip install numpy
+        pip install dlib
+        pip install gtts
+        pip install gTTS
+        # Add any additional dependencies here
+
+    - name: Run Face Recognition
+      run: python ${{ github.workspace }}/main.py
